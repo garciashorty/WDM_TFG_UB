@@ -21,7 +21,7 @@ class AdminDashboardTest extends TestCase
         ]);
 
         $this->actingAs($admin)
-            ->get(route('admin.dashboard'))
+            ->get(route('admin_dashboard'))
             ->assertStatus(200)
             ->assertSee('Panel de administrador');
     }
@@ -36,7 +36,7 @@ class AdminDashboardTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->get(route('admin.dashboard'))
+            ->get(route('admin_dashboard'))
             ->assertStatus(403);
     }
 
@@ -45,7 +45,7 @@ class AdminDashboardTest extends TestCase
      */
     public function guest_cannot_visit_the_admin_dashboard()
     {
-        $this->get(route('admin.dashboard'))
+        $this->get(route('admin_dashboard'))
             ->assertStatus(302)
             ->assertRedirect(route('login'));
     }

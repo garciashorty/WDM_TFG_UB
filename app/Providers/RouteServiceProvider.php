@@ -35,9 +35,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
+        //$this->mapApiRoutes();
 
         $this->mapWebRoutes();
+
+        $this->mapAdminRoutes();
+        $this->mapUserRoutes();
+        $this->mapDoctorRoutes();
 
         //
     }
@@ -57,17 +61,65 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "api" routes for the application.
+     * Define the "admin" routes for the application.
      *
-     * These routes are typically stateless.
+     * These routes all receive session state, CSRF protection, etc.
+     * require authentication and admin user etc.
      *
      * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapAdminRoutes()
     {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+        Route::middleware(['web', 'auth', 'admin'])
+             ->namespace($this->namespace.'\Admin')
+             ->prefix('/admin')
+             ->group(base_path('routes/admin.php'));
     }
+
+    /**
+     * Define the "user" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     * require authentication and default user etc.
+     *
+     * @return void
+     */
+    protected function mapUserRoutes()
+    {
+        Route::middleware(['web', 'auth','user'])
+             ->namespace($this->namespace.'\User')
+             ->prefix('/user')
+             ->group(base_path('routes/user.php'));
+    }
+
+    /**
+     * Define the "doctor" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     * require authentication and doctor user etc.
+     *
+     * @return void
+     */
+    protected function mapDoctorRoutes()
+    {
+        Route::middleware(['web', 'auth', 'doctor'])
+             ->namespace($this->namespace.'\Doctor')
+             ->prefix('/doctor')
+             ->group(base_path('routes/doctor.php'));
+    }
+
+    // /**
+    //  * Define the "api" routes for the application.
+    //  *
+    //  * These routes are typically stateless.
+    //  *
+    //  * @return void
+    //  */
+    // protected function mapApiRoutes()
+    // {
+    //     Route::prefix('api')
+    //          ->middleware('api')
+    //          ->namespace($this->namespace)
+    //          ->group(base_path('routes/api.php'));
+    // }
 }

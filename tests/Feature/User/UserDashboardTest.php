@@ -7,24 +7,39 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 
-class HomeTest extends TestCase
+class UserDashboardTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    function it_shows_home_to_authenticated_users()
+    function users_can_visit_users_dashboard()
     {
-        $user = factory(User::class)->create([]);
+        $user = factory(User::class)->create([
+            'doctor' => false,
+        ]);
 
         $this->actingAs($user)
-            ->get(route('default_user.home'))
+            ->get(route('user_dashboard'))
             ->assertSee('Panel de usuario')
             ->assertStatus(200);
 
     }
 
+    /** @test */
+    function non_default_users_cannot_visit_users_dashboard()
+    {
+        $user = factory(User::class)->create([
+            'doctor' => true,
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('user_dashboard'))
+            ->assertStatus(403);
+
+    }
+
     // /** @test */
-    // function it_shows_home_to_admins()
+    // function admins_can_visit_users_dashboard()
     // {
     //     $this->actingAsAdmin()
     //         ->get(route('home'))
@@ -36,7 +51,7 @@ class HomeTest extends TestCase
     /** @test */
     function it_redirects_guest_users_to_login_page()
     {
-        $this->get(route('default_user.home'))
+        $this->get(route('user_dashboard'))
             ->assertStatus(302)
             ->assertRedirect('login');
 
