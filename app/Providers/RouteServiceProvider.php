@@ -24,6 +24,9 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Route::macro('catch', function ($action){
+            $this->any('{anything}', $action)->where('anything', '.*')->fallback();
+        });
 
         parent::boot();
     }

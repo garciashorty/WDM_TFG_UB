@@ -16,8 +16,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        // TODO Cambiar doctor por admin cuando sea preciso
-        if (! auth()->user()->doctor) {
+        if (! optional(auth()->user())->admin) {
             return response()->view('errors/403', [], Response::HTTP_FORBIDDEN); //error 403
         }
         return $next($request);

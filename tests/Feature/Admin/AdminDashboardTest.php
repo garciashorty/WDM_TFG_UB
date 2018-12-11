@@ -17,7 +17,7 @@ class AdminDashboardTest extends TestCase
     public function admins_can_visit_the_admin_dashboard()
     {
         $admin = factory(User::class)->create([
-            'doctor' => true,
+            'admin' => true,
         ]);
 
         $this->actingAs($admin)
@@ -32,7 +32,7 @@ class AdminDashboardTest extends TestCase
     public function non_admin_users_cannot_visit_the_admin_dashboard()
     {
         $user = factory(User::class)->create([
-            'doctor' => false,
+            'admin' => false,
         ]);
 
         $this->actingAs($user)
