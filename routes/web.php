@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//Route::get('/home', 'HomeController@index')->name('home')->middleware('auth:web,admin');
+
 //Login admin
 Route::get('admin/login', 'Admin\LoginController@showLoginForm')->name('admin_login');
 Route::post('admin/login', 'Admin\LoginController@login');

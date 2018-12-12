@@ -29,7 +29,7 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'admin' => 'boolean'
+        'doctor' => 'boolean'
     ];
 
     public function isAdmin()

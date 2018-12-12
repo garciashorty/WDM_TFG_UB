@@ -42,20 +42,20 @@ abstract class TestCase extends BaseTestCase
         return factory(Admin::class)->create($attributes);
     }
 
-    protected function createUser(array $attributes = [])
+    protected function createUser(array $attributes = ['doctor' => false])
     {
         $user = factory(User::class)->create($attributes);
 
-        $user->doctor = false;
+        //dd($user);
 
         return $user;
     }
 
-    protected function createDoctor(array $attributes = [])
+    protected function createDoctor(array $attributes = ['doctor' => true])
     {
         $doctor = factory(User::class)->create($attributes);
 
-        $doctor->doctor = true;
+        //dd($doctor);
 
         return $doctor;
     }

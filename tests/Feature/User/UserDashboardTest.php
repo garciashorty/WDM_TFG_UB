@@ -14,11 +14,7 @@ class UserDashboardTest extends TestCase
     /** @test */
     function users_can_visit_users_dashboard()
     {
-        $user = factory(User::class)->create([
-            'doctor' => false,
-        ]);
-
-        $this->actingAs($user)
+        $this->actingAsUser()
             ->get(route('user_dashboard'))
             ->assertSee('Panel de usuario')
             ->assertStatus(200);
@@ -28,11 +24,7 @@ class UserDashboardTest extends TestCase
     /** @test */
     function non_default_users_cannot_visit_users_dashboard()
     {
-        $user = factory(User::class)->create([
-            'doctor' => true,
-        ]);
-
-        $this->actingAs($user)
+        $this->actingAsDoctor()
             ->get(route('user_dashboard'))
             ->assertStatus(403);
 
@@ -42,7 +34,7 @@ class UserDashboardTest extends TestCase
     // function admins_can_visit_users_dashboard()
     // {
     //     $this->actingAsAdmin()
-    //         ->get(route('home'))
+    //         ->get(route('user_dashboard'))
     //         ->assertSee('Dashboard')
     //         ->assertStatus(200);
 
