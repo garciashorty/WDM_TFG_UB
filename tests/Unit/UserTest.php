@@ -14,16 +14,10 @@ class UserTest extends TestCase
     /** @test */
     public function a_user_cannot_be_an_admin()
     {
-        $user = factory(User::class)->create([
-            'admin' => false,
-        ]);
+        $user = factory(User::class)->create([]);
 
         $user->refresh();
 
-        $this->assertFalse($user->admin);
-
-        $user->admin = true;
-
-        $this->assertTrue($user->admin);
+        $this->assertFalse($user->isAdmin());
     }
 }

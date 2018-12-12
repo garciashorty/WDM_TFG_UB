@@ -10,26 +10,53 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function createAdmin()
+    protected function actingAsAdmin($admin = null)
     {
-        return factory(Admin::class)->create([
-            'admin' => true,
-        ]);
+        if ($admin == null) {
+            $admin = $this->createAdmin();
+        }
+
+        return $this->actingAs($admin, 'admin');
     }
 
-    protected function createUser()
+    protected function actingAsUser($user = null)
     {
-        return factory(User::class)->create([
-            'doctor' => false,
-            'admin' => false,
-        ]);
+        if ($user == null) {
+            $user = $this->createUser();
+        }
+
+        return $this->actingAs($user);
     }
 
-    protected function createDoctor()
+    protected function actingAsDoctor($doctor = null)
     {
-        return factory(User::class)->create([
-            'doctor' => true,
-            'admin' => false,
-        ]);
+        if ($doctor == null) {
+            $doctor = $this->createDoctor();
+        }
+
+        return $this->actingAs($doctor);
+    }
+
+    protected function createAdmin(array $attributes = [])
+    {
+        return factory(Admin::class)->create($attributes);
+    }
+
+    protected function createUser(array $attributes = [])
+    {
+        $user = factory(User::class)->create($attributes);
+
+        $user->doctor = false;
+
+        return $user;
+    }
+
+    protected function createDoctor(array $attributes = [])
+    {
+        $doctor = factory(User::class)->create($attributes);
+
+        $doctor->doctor = true;
+
+        return $doctor;
     }
 }

@@ -16,22 +16,17 @@ class CustomDirectivesTest extends TestCase
     /** @test */
     function administrator_user_can_see_the_contents_of_the_directive_admin()
     {
-        $admin = factory(User::class)->create([
-            'admin' => true
-        ]);
-
-        $this->actingAs($admin)
+        $this->actingAs($this->createAdmin())
             ->assertTrue(Blade::check('admin'));
     }
 
     /** @test */
     function non_administrator_user_cannot_see_the_contents_of_the_directive_admin()
     {
-        $user = factory(User::class)->create([
-            'admin' => false
-        ]);
+        $this->actingAs($this->createUser())
+            ->assertFalse(Blade::check('admin'));
 
-        $this->actingAs($user)
+        $this->actingAs($this->createDoctor())
             ->assertFalse(Blade::check('admin'));
     }
 }

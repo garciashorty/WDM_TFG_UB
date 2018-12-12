@@ -17,6 +17,10 @@ class ViewServiceProvider extends ServiceProvider
         Blade::if('admin', function() {
             return auth()->check() && auth()->user()->isAdmin();
         });
+
+        Blade::if('doctor', function() {
+            return auth()->check() && auth()->user()->isDoctor();
+        });
     }
 
     /**

@@ -16,9 +16,7 @@ class AdminDashboardTest extends TestCase
      */
     public function admins_can_visit_the_admin_dashboard()
     {
-        $this->withoutExceptionHandling();
-
-        $this->actingAs($this->createAdmin())
+        $this->actingAsAdmin()
             ->get(route('admin_dashboard'))
             ->assertStatus(200)
             ->assertSee('Panel de administrador');
@@ -29,13 +27,13 @@ class AdminDashboardTest extends TestCase
      */
     public function non_admin_users_cannot_visit_the_admin_dashboard()
     {
-        $this->actingAs($this->createUser())
+        $this->actingAsUser()
             ->get(route('admin_dashboard'))
-            ->assertStatus(403);
+            ->assertStatus(302);
 
-        $this->actingAs($this->createDoctor())
+        $this->actingAsDoctor()
             ->get(route('admin_dashboard'))
-            ->assertStatus(403);
+            ->assertStatus(302);
     }
 
 

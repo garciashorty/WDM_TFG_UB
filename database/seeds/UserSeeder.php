@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
             'surname' => 'user',
             'email' => 'default@user.com',
             'doctor' => false,
-            'admin' => false,
             'phone' => '+34611222333',
             'password' => bcrypt('123456'),
         ]);
@@ -27,7 +26,6 @@ class UserSeeder extends Seeder
             'surname' => 'user',
             'email' => 'doctor@user.com',
             'doctor' => true,
-            'admin' => true,
             'phone' => '+34622333444',
             'password' => bcrypt('123456'),
         ]);

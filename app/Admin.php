@@ -8,6 +8,11 @@ class Admin extends Authenticatable
 {
     public function isAdmin()
     {
-        return $this->admin;
+        return true;
+    }
+
+    public function isDoctor()
+    {
+        return false;
     }
 }
