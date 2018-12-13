@@ -6,15 +6,17 @@ Route::get('/', 'Dashboard@index')->name('admin_dashboard');
 
 Route::get('/users', 'UserController@index')->name('admin_users');
 Route::get('/users/{user}', 'UserController@show')->name('admin_show_users')->where('user', '[0-9]+');
-Route::get('/users/{id}/edit', 'UserController@edit')->name('admin_edit_users')->where('id', '[0-9]+');
+Route::get('/users/{user}/edit', 'UserController@edit')->name('admin_edit_users')->where('user', '[0-9]+');
 Route::get('/users/create', 'UserController@create')->name('admin_create_users');
 Route::post('/users', 'UserController@store');
+Route::put('/users/{user}', 'UserController@update');
 
 Route::get('/doctors', 'DoctorController@index')->name('admin_doctors');
 Route::get('/doctors/{doctor}', 'DoctorController@show')->name('admin_show_doctors')->where('doctor', '[0-9]+');
-Route::get('/doctors/{id}/edit', 'DoctorController@edit')->name('admin_edit_doctors')->where('id', '[0-9]+');
+Route::get('/doctors/{doctor}/edit', 'DoctorController@edit')->name('admin_edit_doctors')->where('doctor', '[0-9]+');
 Route::get('/doctors/create', 'DoctorController@create')->name('admin_create_doctors');
 Route::post('/doctors', 'DoctorController@store');
+Route::put('/doctors/{doctor}', 'DoctorController@update');
 
 
 Route::catch(function ($id){

@@ -62,17 +62,6 @@ class UsersModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_load_users_edit()
-    {
-        $this->actingAsAdmin()
-            ->get('/admin/users/5/edit')
-        	->assertStatus(200)
-        	->assertSee('Editando usuario: 5');
-    }
-
-    /**
-     * @test
-     */
     public function test_load_users_edit_fail()
     {
         $this->actingAsAdmin()
@@ -214,7 +203,7 @@ class UsersModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_email_long_is_6_char()
+    public function test_pass_long_is_6_char()
     {
         $old_user_count = User::count();
 
@@ -229,4 +218,206 @@ class UsersModuleTest extends TestCase
 
         $this->assertEquals($old_user_count, User::count());
     }
+
+    /**
+     * @test
+     */
+    public function test_load_edit_users_page()
+    {
+        $user = factory(User::class)->create();
+
+        $this->actingAsAdmin()
+            ->get("admin/users/{$user->id}/edit")
+            ->assertStatus(200)
+            ->assertSee("Editando usuario: $user->id")
+            ->assertViewIs('admin.users.edit')
+            ->assertViewHas('user', function($viewUser) use ($user){
+                return $viewUser->id == $user->id;
+            });
+    }
+
+    /**
+     * @test
+     */
+    public function test_updates_a_user()
+    {
+
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+
+        $this->actingAsAdmin()
+            ->put("admin/users/{$user->id}", [
+            'name' => 'Koda3',
+            'surname' => 'koda',
+            'email' => 'koda34@koda.com',
+            'phone' => '+34688699677',
+            'password' => '123456',
+        ])->assertRedirect("admin/users/{$user->id}");
+
+        $this->assertDatabaseHas('users',[
+            'name' => 'Koda3',
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function test_name_is_required_when_update_a_user()
+    {
+        $user = factory(User::class)->create();
+
+        $this->actingAsAdmin()
+            ->from("/admin/users/{$user->id}/edit")
+            ->put("/admin/users/{$user->id}", [
+                'name' => '',
+                'email' => 'antonio2@antonio2.com',
+                'password' => '1234'
+            ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
+                ->assertSessionHasErrors(['name' => 'Debe introducir un nombre']);
+
+        $this->assertDatabaseMissing('users', [
+            'email' => 'antonio2@antonio2.com',
+        ]);
+    }
+
+    // /**
+    //  * @test
+    //  */
+    // public function test_email_is_required_when_update_a_user()
+    // {
+    //     //$this->withoutExceptionHandling();
+
+    //     $user = factory(User::class)->create();
+
+    //     $this->actingAsAdmin()
+    //         ->from("/admin/users/{$user->id}/edit")
+    //         ->put("/admin/users/{$user->id}", [
+    //             'name' => 'Antonio2',
+    //             'email' => '',
+    //             'password' => '1234'
+    //         ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
+    //             ->assertSessionHasErrors(['email' => 'Debe introducir un email']);
+
+    //     $this->assertDatabaseMissing('users', [
+    //         'name' => 'Antonio2',
+    //     ]);
+    // }
+
+    /**
+     * @test
+     */
+    public function test_password_is_required_when_update_a_user()
+    {
+        $user = factory(User::class)->create();
+
+        $this->actingAsAdmin()
+            ->from("/admin/users/{$user->id}/edit")
+            ->put("/admin/users/{$user->id}", [
+                'name' => 'Antonio2',
+                'surname' => 'user',
+                'email' => 'antonio2222@antonio.com',
+                'phone' => '+34655688677',
+            ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
+                ->assertSessionHasErrors(['password' => 'Debe introducir una contraseña']);
+
+        $this->assertDatabaseMissing('users', [
+            'email' => 'antonio2222@antonio.com',
+        ]);
+    }
+
+    // /**
+    //  * @test
+    //  */
+    // public function test_email_is_invalid_when_update_a_user()
+    // {
+    //     $user = factory(User::class)->create();
+
+    //     $this->actingAsAdmin()
+    //         ->from("/admin/users/{$user->id}/edit")
+    //         ->put("/admin/users/{$user->id}", [
+    //             'name' => 'Antonio2',
+    //             'email' => 'antonio2',
+    //             'password' => '1234'
+    //         ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
+    //             ->assertSessionHasErrors(['email' => 'Debe introducir un email válido']);
+
+    //     $this->assertDatabaseMissing('users', [
+    //         'email' => 'antonio2@antonio2.com',
+    //     ]);
+    // }
+
+    // /**
+    //  * @test
+    //  */
+    // public function test_email_is_unique_when_update_a_users()
+    // {
+
+    //     $user = factory(User::class)->create([
+    //         'email' => 'antonio2@antonio2.com',
+    //     ]);
+
+    //     $user2 = factory(User::class)->create([
+    //         'email' => 'antonio55@antonio55.com',
+    //     ]);
+
+    //     $this->actingAsAdmin()
+    //         ->from("/admin/users/{$user->id}/edit")
+    //         ->put("/admin/users/{$user->id}", [
+    //             'name' => 'Antonio2',
+    //             'email' => 'antonio55@antonio55.com',
+    //             'password' => '12345678'
+    //         ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
+    //             ->assertSessionHasErrors(['email' => 'El email introducido ya existe']);
+
+    // }
+
+    /**
+     * @test
+     */
+    public function test_pass_long_is_6_char_when_update_a_users()
+    {
+        //$this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+
+        $this->actingAsAdmin()
+            ->from("/admin/users/{$user->id}/edit")
+            ->put("/admin/users/{$user->id}", [
+                'name' => 'Antonio2',
+                'email' => 'antonio3@antonio3.com',
+                'password' => '1234'
+            ])->assertRedirect(route('admin_edit_users', ['users' => $user]))
+                ->assertSessionHasErrors(['password' => 'La contraseña debe tener entre 6 y 14 carácteres']);
+
+        $this->assertDatabaseMissing('users', [
+            'email' => 'antonio3@antonio3.com',
+        ]);
+    }
+
+    // /**
+    //  * @test
+    //  */
+    // public function test_users_email_can_be_the_same_when_update_a_user()
+    // {
+    //     $this->withoutExceptionHandling();
+
+    //     $user = factory(User::class)->create([
+    //         'email' => 'antonio33@antonio33.com',
+    //         'doctor' => true,
+    //     ]);
+
+    //     $this->actingAsAdmin()
+    //         ->from("/admin/users/{$user->id}/edit")
+    //         ->put("/admin/users/{$user->id}", [
+    //             'name' => 'Antonio33',
+    //             'email' => 'antonio33@antonio33.com',
+    //             'password' => '123456'
+    //         ])->assertRedirect(route('admin_show_doctors', ['user' => $user]));
+
+    //     $this->assertDatabaseHas('users', [
+    //         'name' => 'Antonio33',
+    //         'email' => 'antonio33@antonio33.com',
+    //     ]);
+    // }
 }

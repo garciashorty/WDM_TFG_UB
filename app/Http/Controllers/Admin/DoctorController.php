@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Validation\Rule;
 
 class DoctorController extends Controller
 {
@@ -30,9 +31,10 @@ class DoctorController extends Controller
     	return view('/admin/doctors/create');
     }
 
-    public function edit($id)
+    public function edit(user $doctor)
     {
-    	return "Editando doctor: {$id}";
+        return view('admin/doctors/edit')
+            ->with('doctor', $doctor);
     }
 
     public function store()
@@ -64,5 +66,35 @@ class DoctorController extends Controller
         ]);
 
     	return redirect()->route('admin_doctors');
+    }
+
+    public function update(User $doctor)
+    {
+        $data = request()->validate([
+            'name' => 'required',
+            'surname' => 'required',
+            'phone' => 'required',
+            'email' => '',
+            'password' => ['required', 'between:6,14'],
+        ], [
+            'name.required' => 'Debe introducir un nombre',
+            'surname.required' => 'Debe introducir un apellido',
+            'phone.required' => 'Debe introducir un teléfono',
+            //'email.required' => 'Debe introducir un email',
+            //'email.email' => 'Debe introducir un email válido',
+            //'email.unique' => 'El email introducido ya existe',
+            'password.required' => 'Debe introducir una contraseña',
+            'password.between' => 'La contraseña debe tener entre 6 y 14 carácteres'
+        ]);
+
+        if ($data['email'] != null) {
+            unset($data['email']);
+        }
+
+        $data['password'] = bcrypt($data['password']);
+
+        $doctor->update($data);
+
+        return redirect()->route('admin_show_doctors', ['doctor' => $doctor]);
     }
 }

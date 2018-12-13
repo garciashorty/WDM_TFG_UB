@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -30,9 +31,10 @@ class UserController extends Controller
     	return view('/admin/users/create');
     }
 
-    public function edit($id)
+    public function edit(User $user)
     {
-    	return "Editando usuario: {$id}";
+    	return view('admin/users/edit')
+            ->with('user', $user);
     }
 
     public function store()
@@ -63,5 +65,36 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('admin_users');
+    }
+
+    public function update(User $user)
+    {
+        $data = request()->validate([
+            'name' => 'required',
+            'surname' => 'required',
+            'phone' => 'required',
+            'email' => '',
+            'password' => ['required', 'between:6,14'],
+        ], [
+            'name.required' => 'Debe introducir un nombre',
+            'surname.required' => 'Debe introducir un apellido',
+            'phone.required' => 'Debe introducir un teléfono',
+            //'email.required' => 'Debe introducir un email',
+            //'email.email' => 'Debe introducir un email válido',
+            //'email.unique' => 'El email introducido ya existe',
+            'password.required' => 'Debe introducir una contraseña',
+            'password.between' => 'La contraseña debe tener entre 6 y 14 carácteres'
+        ]);
+
+        if ($data['email'] != null) {
+            unset($data['email']);
+        }
+
+        $data['password'] = bcrypt($data['password']);
+
+        $user->update($data);
+
+
+        return redirect()->route('admin_show_users', ['user' => $user]);
     }
 }
