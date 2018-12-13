@@ -11,7 +11,7 @@ class DoctorController extends Controller
 {
     public function index()
     {
-        $doctors = User::where('doctor', true)->get();
+        $doctors = User::where('doctor', true)->paginate(15);
 
         $title = 'Listado de doctores';
 
@@ -103,5 +103,12 @@ class DoctorController extends Controller
         $doctor->update($data);
 
         return redirect()->route('admin_show_doctors', ['doctor' => $doctor]);
+    }
+
+    public function delete(User $doctor)
+    {
+        $doctor->delete();
+
+        return redirect()->route('admin_doctors');
     }
 }

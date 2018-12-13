@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class DoctorsModuleTest extends TestCase
 {
@@ -441,4 +442,26 @@ class DoctorsModuleTest extends TestCase
     //         'email' => 'antonio33@antonio33.com',
     //     ]);
     // }
+
+    /**
+     * @test
+     */
+    public function test_delete_a_doctor()
+    {
+        //$this->withoutExceptionHandling();
+
+        DB::table('users')->truncate();
+
+        $doctor = factory(User::class)->create([
+            'doctor' => true,
+        ]);
+
+        $this->actingAsAdmin()
+            ->delete("admin/doctors/{$doctor->id}")
+            ->assertRedirect(route('admin_doctors'));
+
+        $this->assertDatabaseMissing('users', [
+            'id' => $doctor->id,
+        ]);
+    }
 }

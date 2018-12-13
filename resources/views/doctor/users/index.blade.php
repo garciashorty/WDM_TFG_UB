@@ -1,14 +1,14 @@
-@extends('layouts.app_admin')
+@extends('layouts.app_doctor')
 
 @section('title')
-Admin: Users List
+    Doctor: Lista de usuarios
 @endsection
 
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-2">
         <h1 class="pb-2">{{ $title }}</h1>
         <p>
-            <a href="{{ route('admin_create_users') }}" class="btn btn-primary">Nuevo usuario</a>
+            <a href="{{ route('doctor_create_users') }}" class="btn btn-primary">Nuevo usuario</a>
         </p>
     </div>
 
@@ -35,11 +35,11 @@ Admin: Users List
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <form action="{{ route('admin_delete_users', $user) }}" method="POST">
+                            <form action="{{ route('doctor_delete_users', $user) }}" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
-                                <a href="{{ route('admin_show_users', $user) }}" class="btn btn-link"><span class="oi oi-eye"></span></a>
-                                <a href="{{ route('admin_edit_users', $user)}}" class="btn btn-link"><span class="oi oi-pencil"></span></a>
+                                <a href="{{ route('doctor_show_users', $user) }}" class="btn btn-link"><span class="oi oi-eye"></span></a>
+                                <a href="{{ route('doctor_edit_users', $user)}}" class="btn btn-link"><span class="oi oi-pencil"></span></a>
                                 <button type="submit" class="btn btn-link"><span class="oi oi-trash"></span></button>
                             </form>
                         </td>

@@ -16,6 +16,9 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/wdm-tfg.css') }}" rel="stylesheet">
+
+    <!-- Icons css -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css" integrity="sha256-CNwnGWPO03a1kOlAsGaH5g8P3dFaqFqqGFV/1nkX5OU=" crossorigin="anonymous" />
 </head>
 
 <body>
@@ -135,6 +138,7 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    @yield('scripts')
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Admin\Users;
+namespace Tests\Feature\Doctor\Users;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use Illuminate\Support\Facades\DB;
 
-class UsersModuleTest extends TestCase
+class UsersModuleDoctorTest extends TestCase
 {
 
     use RefreshDatabase;
@@ -18,6 +18,7 @@ class UsersModuleTest extends TestCase
      */
     public function test_load_users_list()
     {
+        $this->withoutExceptionHandling();
         factory(User::class)->create([
             'name' => 'Joel',
         ]);
@@ -26,8 +27,8 @@ class UsersModuleTest extends TestCase
             'name' => 'Ellie',
         ]);
 
-        $this->actingAsAdmin()
-            ->get('/admin/users')
+        $this->actingAsDoctor()
+            ->get('/doctor/users')
         	->assertStatus(200)
         	->assertSee('Listado de usuarios')
             ->assertSee('Joel')
@@ -43,8 +44,8 @@ class UsersModuleTest extends TestCase
             'name' => 'Victor',
         ]);
 
-        $this->actingAsAdmin()
-            ->get('/admin/users/'.$user->id)
+        $this->actingAsDoctor()
+            ->get('/doctor/users/'.$user->id)
         	->assertStatus(200)
         	->assertSee('Victor');
     }
@@ -54,8 +55,8 @@ class UsersModuleTest extends TestCase
      */
     public function test_load_users_new()
     {
-        $this->actingAsAdmin()
-            ->get('/admin/users/create')
+        $this->actingAsDoctor()
+            ->get('/doctor/users/create')
         	->assertStatus(200)
         	->assertSee('Creando nuevo usuario.');
     }
@@ -65,8 +66,8 @@ class UsersModuleTest extends TestCase
      */
     public function test_load_users_edit_fail()
     {
-        $this->actingAsAdmin()
-            ->get('/admin/users/texto/edit')
+        $this->actingAsDoctor()
+            ->get('/doctor/users/texto/edit')
         	->assertStatus(404);
     }
 
@@ -75,8 +76,8 @@ class UsersModuleTest extends TestCase
      */
     public function test_show_404_error_user_not_found()
     {
-        $this->actingAsAdmin()
-            ->get('/admin/users/999')
+        $this->actingAsDoctor()
+            ->get('/doctor/users/999')
             ->assertStatus(404)
             ->assertSee('Página no encontrada');
     }
@@ -86,14 +87,14 @@ class UsersModuleTest extends TestCase
      */
     public function test_create_new_user()
     {
-        $this->actingAsAdmin()
-            ->post('admin/users/', [
+        $this->actingAsDoctor()
+            ->post('doctor/users/', [
            'name' => 'Made',
            'surname' => 'Zamora',
            'email' => 'made@made.com',
            'phone' => '+34655655655',
            'password' => '123456'
-        ])->assertRedirect(route('admin_users'));
+        ])->assertRedirect(route('doctor_users'));
 
         $this->assertDatabaseHas('users', [
             'name' => 'Made',
@@ -106,80 +107,98 @@ class UsersModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_name_is_required()
+    public function test_name_is_required_doctor()
     {
-        $users_count = User::count();
-
-        $this->actingAsAdmin()
-            ->from('admin/users/create')
-            ->post('admin/users', [
+        $this->actingAsDoctor()
+            ->from('doctor/users/create')
+            ->post('doctor/users', [
+                'surname' => 'Zamora',
                 'email' => 'antonio@antonio.com',
                 'password' => '123456'
-            ])->assertRedirect(route('admin_create_users'))
+            ])->assertRedirect(route('doctor_create_users'))
                 ->assertSessionHasErrors(['name' => 'Debe introducir un nombre']);
 
-        $this->assertEquals($users_count, User::count());
+        $this->assertDatabaseMissing('users', [
+            'surname' => 'Zamora',
+            'email' => 'antonio@antonio.com',
+            'phone' => '+34655655655',
+        ]);
     }
 
     /**
      * @test
      */
-    public function test_email_is_required()
+    public function test_email_is_required_doctor()
     {
-        $old_user_count = User::count();
+        //$old_user_count = User::count();
 
-        $this->actingAsAdmin()
-            ->from('admin/users/create')
-            ->post('admin/users', [
+        $this->actingAsDoctor()
+            ->from('doctor/users/create')
+            ->post('doctor/users', [
                 'name' => 'Antonio',
+                'surname' => 'Manuel',
                 'password' => '123456'
-            ])->assertRedirect(route('admin_create_users'))
+            ])->assertRedirect(route('doctor_create_users'))
                 ->assertSessionHasErrors(['email' => 'Debe introducir un email']);
 
-        $this->assertEquals($old_user_count, User::count());
+        $this->assertDatabaseMissing('users', [
+            'name' => 'Antonio',
+            'surname' => 'Manuel',
+            'password' => '123456'
+        ]);
     }
 
     /**
      * @test
      */
-    public function test_password_is_required()
+    public function test_password_is_required_doctor()
     {
-        $old_user_count = User::count();
+        //$old_user_count = User::count();
 
-        $this->actingAsAdmin()
-            ->from('admin/users/create')
-            ->post('admin/users', [
+        $this->actingAsDoctor()
+            ->from('doctor/users/create')
+            ->post('doctor/users', [
                 'name' => 'Antonio',
                 'email' => 'antonio@antonio.com'
-            ])->assertRedirect(route('admin_create_users'))
+            ])->assertRedirect(route('doctor_create_users'))
                 ->assertSessionHasErrors(['password']);
 
-        $this->assertEquals($old_user_count, User::count());
+        $this->assertDatabaseMissing('users', [
+            'name' => 'Antonio',
+            'email' => 'antonio@antonio.com',
+        ]);
+
+        //$this->assertEquals($old_user_count, User::count());
     }
 
     /**
      * @test
      */
-    public function test_email_is_invalid()
+    public function test_email_is_invalid_doctor()
     {
-        $old_user_count = User::count();
+        //$old_user_count = User::count();
 
-        $this->actingAsAdmin()
-            ->from('admin/users/create')
-            ->post('admin/users', [
+        $this->actingAsDoctor()
+            ->from('doctor/users/create')
+            ->post('doctor/users', [
                 'name' => 'Antonio',
                 'email' => 'antonio',
                 'password' => '123456',
-            ])->assertRedirect(route('admin_create_users'))
+            ])->assertRedirect(route('doctor_create_users'))
                 ->assertSessionHasErrors(['email']);
 
-        $this->assertEquals($old_user_count, User::count());
+        $this->assertDatabaseMissing('users', [
+            'name' => 'Antonio',
+            'email' => 'antonio',
+        ]);
+
+        //$this->assertEquals($old_user_count, User::count());
     }
 
     /**
      * @test
      */
-    public function test_email_is_unique()
+    public function test_email_is_unique_doctor()
     {
         User::truncate();
 
@@ -187,51 +206,58 @@ class UsersModuleTest extends TestCase
             'email' => 'antonio555@antonio.com'
         ]);
 
-        $old_user_count = User::count();
+        //$old_user_count = User::count();
 
-        $this->actingAsAdmin()
-            ->from('admin/users/create')
-            ->post('admin/users', [
+        $this->actingAsDoctor()
+            ->from('doctor/users/create')
+            ->post('doctor/users', [
                 'name' => 'Antonio',
                 'email' => 'antonio555@antonio.com',
                 'password' => '123456',
-            ])->assertRedirect(route('admin_create_users'))
+            ])->assertRedirect(route('doctor_create_users'))
                 ->assertSessionHasErrors(['email']);
 
-        $this->assertEquals($old_user_count, User::count());
+        $this->assertDatabaseMissing('users', [
+            'name' => 'Antonio',
+        ]);
+        //$this->assertEquals($old_user_count, User::count());
     }
 
     /**
      * @test
      */
-    public function test_pass_long_is_6_char()
+    public function test_pass_long_is_6_char_doctor()
     {
-        $old_user_count = User::count();
+        //$old_user_count = User::count();
 
-        $this->actingAsAdmin()
-            ->from('admin/users/create')
-            ->post('admin/users', [
+        $this->actingAsDoctor()
+            ->from('doctor/users/create')
+            ->post('doctor/users', [
                 'name' => 'Antonio',
                 'email' => 'antonio@antonio.com',
                 'password' => '1234',
-            ])->assertRedirect(route('admin_create_users'))
+            ])->assertRedirect(route('doctor_create_users'))
                 ->assertSessionHasErrors(['password']);
 
-        $this->assertEquals($old_user_count, User::count());
+        $this->assertDatabaseMissing('users', [
+            'name' => 'Antonio',
+            'email' => 'antonio@antonio.com',
+        ]);
+        //$this->assertEquals($old_user_count, User::count());
     }
 
     /**
      * @test
      */
-    public function test_load_edit_users_page()
+    public function test_load_edit_users_page_doctor()
     {
         $user = factory(User::class)->create();
 
-        $this->actingAsAdmin()
-            ->get("admin/users/{$user->id}/edit")
+        $this->actingAsDoctor()
+            ->get("doctor/users/{$user->id}/edit")
             ->assertStatus(200)
             ->assertSee("Editando usuario: $user->id")
-            ->assertViewIs('admin.users.edit')
+            ->assertViewIs('doctor.users.edit')
             ->assertViewHas('user', function($viewUser) use ($user){
                 return $viewUser->id == $user->id;
             });
@@ -240,21 +266,21 @@ class UsersModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_updates_a_user()
+    public function test_updates_a_user_doctor()
     {
 
         $this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
 
-        $this->actingAsAdmin()
-            ->put("admin/users/{$user->id}", [
+        $this->actingAsDoctor()
+            ->put("doctor/users/{$user->id}", [
             'name' => 'Koda3',
             'surname' => 'koda',
             'email' => 'koda34@koda.com',
             'phone' => '+34688699677',
             'password' => '123456',
-        ])->assertRedirect("admin/users/{$user->id}");
+        ])->assertRedirect("doctor/users/{$user->id}");
 
         $this->assertDatabaseHas('users',[
             'name' => 'Koda3',
@@ -264,17 +290,17 @@ class UsersModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_name_is_required_when_update_a_user()
+    public function test_name_is_required_when_update_a_user_doctor()
     {
         $user = factory(User::class)->create();
 
-        $this->actingAsAdmin()
-            ->from("/admin/users/{$user->id}/edit")
-            ->put("/admin/users/{$user->id}", [
+        $this->actingAsDoctor()
+            ->from("/doctor/users/{$user->id}/edit")
+            ->put("/doctor/users/{$user->id}", [
                 'name' => '',
                 'email' => 'antonio2@antonio2.com',
                 'password' => '1234'
-            ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
+            ])->assertRedirect(route('doctor_edit_users', ['user' => $user]))
                 ->assertSessionHasErrors(['name' => 'Debe introducir un nombre']);
 
         $this->assertDatabaseMissing('users', [
@@ -291,13 +317,13 @@ class UsersModuleTest extends TestCase
 
     //     $user = factory(User::class)->create();
 
-    //     $this->actingAsAdmin()
-    //         ->from("/admin/users/{$user->id}/edit")
-    //         ->put("/admin/users/{$user->id}", [
+    //     $this->actingAsDoctor()
+    //         ->from("/doctor/users/{$user->id}/edit")
+    //         ->put("/doctor/users/{$user->id}", [
     //             'name' => 'Antonio2',
     //             'email' => '',
     //             'password' => '1234'
-    //         ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
+    //         ])->assertRedirect(route('doctor_edit_users', ['user' => $user]))
     //             ->assertSessionHasErrors(['email' => 'Debe introducir un email']);
 
     //     $this->assertDatabaseMissing('users', [
@@ -308,20 +334,20 @@ class UsersModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_password_is_optional_when_update_a_user()
+    public function test_password_is_optional_when_update_a_user_doctor()
     {
         $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
 
-        $this->actingAsAdmin()
-            ->from("/admin/users/{$user->id}/edit")
-            ->put("/admin/users/{$user->id}", [
+        $this->actingAsDoctor()
+            ->from("/doctor/users/{$user->id}/edit")
+            ->put("/doctor/users/{$user->id}", [
                 'name' => 'Antonio2',
                 'surname' => 'user',
                 'email' => 'antonio2222@antonio.com',
                 'password' => '',
                 'phone' => '+34655688677',
-            ])->assertRedirect(route('admin_show_users', ['user' => $user]));
+            ])->assertRedirect(route('doctor_show_users', ['user' => $user]));
 
         $this->assertDatabaseMissing('users', [
             'email' => 'antonio2222@antonio.com',
@@ -335,13 +361,13 @@ class UsersModuleTest extends TestCase
     // {
     //     $user = factory(User::class)->create();
 
-    //     $this->actingAsAdmin()
-    //         ->from("/admin/users/{$user->id}/edit")
-    //         ->put("/admin/users/{$user->id}", [
+    //     $this->actingAsDoctor()
+    //         ->from("/doctor/users/{$user->id}/edit")
+    //         ->put("/doctor/users/{$user->id}", [
     //             'name' => 'Antonio2',
     //             'email' => 'antonio2',
     //             'password' => '1234'
-    //         ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
+    //         ])->assertRedirect(route('doctor_edit_users', ['user' => $user]))
     //             ->assertSessionHasErrors(['email' => 'Debe introducir un email válido']);
 
     //     $this->assertDatabaseMissing('users', [
@@ -363,13 +389,13 @@ class UsersModuleTest extends TestCase
     //         'email' => 'antonio55@antonio55.com',
     //     ]);
 
-    //     $this->actingAsAdmin()
-    //         ->from("/admin/users/{$user->id}/edit")
-    //         ->put("/admin/users/{$user->id}", [
+    //     $this->actingAsDoctor()
+    //         ->from("/doctor/users/{$user->id}/edit")
+    //         ->put("/doctor/users/{$user->id}", [
     //             'name' => 'Antonio2',
     //             'email' => 'antonio55@antonio55.com',
     //             'password' => '12345678'
-    //         ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
+    //         ])->assertRedirect(route('doctor_edit_users', ['user' => $user]))
     //             ->assertSessionHasErrors(['email' => 'El email introducido ya existe']);
 
     // }
@@ -377,19 +403,19 @@ class UsersModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_pass_long_is_6_char_when_update_a_users()
+    public function test_pass_long_is_6_char_when_update_a_users_doctor()
     {
         //$this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
 
-        $this->actingAsAdmin()
-            ->from("/admin/users/{$user->id}/edit")
-            ->put("/admin/users/{$user->id}", [
+        $this->actingAsDoctor()
+            ->from("/doctor/users/{$user->id}/edit")
+            ->put("/doctor/users/{$user->id}", [
                 'name' => 'Antonio2',
                 'email' => 'antonio3@antonio3.com',
                 'password' => '1234'
-            ])->assertRedirect(route('admin_edit_users', ['users' => $user]))
+            ])->assertRedirect(route('doctor_edit_users', ['users' => $user]))
                 ->assertSessionHasErrors(['password' => 'La contraseña debe tener entre 6 y 14 carácteres']);
 
         $this->assertDatabaseMissing('users', [
@@ -409,13 +435,13 @@ class UsersModuleTest extends TestCase
     //         'doctor' => true,
     //     ]);
 
-    //     $this->actingAsAdmin()
-    //         ->from("/admin/users/{$user->id}/edit")
-    //         ->put("/admin/users/{$user->id}", [
+    //     $this->actingAsDoctor()
+    //         ->from("/doctor/users/{$user->id}/edit")
+    //         ->put("/doctor/users/{$user->id}", [
     //             'name' => 'Antonio33',
     //             'email' => 'antonio33@antonio33.com',
     //             'password' => '123456'
-    //         ])->assertRedirect(route('admin_show_doctors', ['user' => $user]));
+    //         ])->assertRedirect(route('doctor_show_doctors', ['user' => $user]));
 
     //     $this->assertDatabaseHas('users', [
     //         'name' => 'Antonio33',
@@ -426,7 +452,7 @@ class UsersModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_delete_a_user()
+    public function test_delete_a_user_doctor()
     {
         //$this->withoutExceptionHandling();
 
@@ -434,9 +460,9 @@ class UsersModuleTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->actingAsAdmin()
-            ->delete("admin/users/{$user->id}")
-            ->assertRedirect(route('admin_users'));
+        $this->actingAsDoctor()
+            ->delete("doctor/users/{$user->id}")
+            ->assertRedirect(route('doctor_users'));
 
         $this->assertDatabaseMissing('users', [
             'id' => $user->id,

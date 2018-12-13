@@ -46,16 +46,12 @@ abstract class TestCase extends BaseTestCase
     {
         $user = factory(User::class)->create($attributes);
 
-        //dd($user);
-
         return $user;
     }
 
     protected function createDoctor(array $attributes = ['doctor' => true])
     {
         $doctor = factory(User::class)->create($attributes);
-
-        //dd($doctor);
 
         return $doctor;
     }

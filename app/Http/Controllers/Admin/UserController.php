@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('doctor', false)->get();
+        $users = User::where('doctor', false)->paginate(15);
 
         $title = 'Listado de usuarios';
 
@@ -101,5 +101,12 @@ class UserController extends Controller
         $user->update($data);
 
         return redirect()->route('admin_show_users', ['user' => $user]);
+    }
+
+    public function delete(User $user)
+    {
+        $user->delete();
+
+        return redirect()->route('admin_users');
     }
 }
