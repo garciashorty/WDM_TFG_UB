@@ -13,11 +13,11 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('main_page');
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home')->middleware('auth:web,admin');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth:web,admin');
 
 //Login admin
 Route::get('admin/login', 'Admin\LoginController@showLoginForm')->name('admin_login');

@@ -22,7 +22,7 @@
 
     <header>
         <!-- Fixed navbar -->
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top homeNavbar">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand link-title" href="{{ route('main_page') }}">WDM-TFG</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,13 +95,27 @@
     </header>
 
     <!-- Begin page content -->
-    <div class="main-photo">
-        <img src="/images/hospital_italiano_ba.jpg" class="img-fluid" alt="Responsive image">
-    </div>
     <main role="main" class="container">
+        <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header"><strong>Panel de administrador</strong></div>
 
-        @yield('content')
+                            <div class="card-body">
+                                @if (session('status'))
+                                    <div class="alert alert-success" role="alert">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
 
+                                @yield('content')
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </main>
 
     <footer class="footer">

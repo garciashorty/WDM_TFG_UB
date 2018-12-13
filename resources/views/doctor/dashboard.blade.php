@@ -1,26 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.app_doctor')
+@section('title')
+Doctor Dashboard
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Panel de doctor</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    You are logged in!
 
-                    You are logged in!
-                    @admin
-                        <a href="{{ route('admin_dashboard') }}">Ir al admin</a>
-                    @endadmin
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
