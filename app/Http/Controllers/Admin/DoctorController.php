@@ -70,12 +70,13 @@ class DoctorController extends Controller
 
     public function update(User $doctor)
     {
+
         $data = request()->validate([
             'name' => 'required',
             'surname' => 'required',
             'phone' => 'required',
             'email' => '',
-            'password' => ['required', 'between:6,14'],
+            'password' => ['nullable', 'between:6,14'],
         ], [
             'name.required' => 'Debe introducir un nombre',
             'surname.required' => 'Debe introducir un apellido',
@@ -83,15 +84,21 @@ class DoctorController extends Controller
             //'email.required' => 'Debe introducir un email',
             //'email.email' => 'Debe introducir un email válido',
             //'email.unique' => 'El email introducido ya existe',
-            'password.required' => 'Debe introducir una contraseña',
+            //'password.nullable' => 'Debe introducir una contraseña',
             'password.between' => 'La contraseña debe tener entre 6 y 14 carácteres'
         ]);
+
+        $data['email'] = $doctor->email;
+
+        if ($data['password'] == '') {
+            unset($data['password']);
+        } else {
+            $data['password'] = bcrypt($data['password']);
+        }
 
         if ($data['email'] != null) {
             unset($data['email']);
         }
-
-        $data['password'] = bcrypt($data['password']);
 
         $doctor->update($data);
 

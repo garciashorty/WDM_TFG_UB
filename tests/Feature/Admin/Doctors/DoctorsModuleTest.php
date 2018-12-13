@@ -317,7 +317,7 @@ class DoctorsModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_password_is_required_when_update_a_doctor()
+    public function test_password_is_optional_when_update_a_doctor()
     {
         $doctor= factory(User::class)->create([
             'doctor' => true,
@@ -329,9 +329,9 @@ class DoctorsModuleTest extends TestCase
                 'name' => 'Antonio2',
                 'surname' => 'user',
                 'email' => 'antonio2222@antonio.com',
+                'password' => '',
                 'phone' => '+34655688677',
-            ])->assertRedirect(route('admin_edit_doctors', ['doctor' => $doctor]))
-                ->assertSessionHasErrors(['password' => 'Debe introducir una contraseña']);
+            ])->assertRedirect(route('admin_show_doctors', ['doctor' => $doctor]));
 
         $this->assertDatabaseMissing('users', [
             'email' => 'antonio2222@antonio.com',

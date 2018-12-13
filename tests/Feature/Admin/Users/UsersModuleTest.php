@@ -307,8 +307,9 @@ class UsersModuleTest extends TestCase
     /**
      * @test
      */
-    public function test_password_is_required_when_update_a_user()
+    public function test_password_is_optional_when_update_a_user()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
 
         $this->actingAsAdmin()
@@ -317,9 +318,9 @@ class UsersModuleTest extends TestCase
                 'name' => 'Antonio2',
                 'surname' => 'user',
                 'email' => 'antonio2222@antonio.com',
+                'password' => '',
                 'phone' => '+34655688677',
-            ])->assertRedirect(route('admin_edit_users', ['user' => $user]))
-                ->assertSessionHasErrors(['password' => 'Debe introducir una contraseña']);
+            ])->assertRedirect(route('admin_show_users', ['user' => $user]));
 
         $this->assertDatabaseMissing('users', [
             'email' => 'antonio2222@antonio.com',
