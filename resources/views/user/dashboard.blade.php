@@ -5,14 +5,11 @@
 @endsection
 
 @section('content')
-    <a class="btn btn-danger btn-lg btn-block" href="#">
+    <a class="btn btn-danger btn-lg btn-block" href="{{ route('user_queries') }}">
         Ver consultas
     </a>
     <br>
-    <a class="btn btn-success btn-lg" href="#">
+    <a class="btn btn-success btn-lg btn-block" href="{{ route('user_create_queries') }}">
         Nueva consulta
-    </a>
-    <a class="btn btn-primary btn-lg" href="#">
-        Repetir consulta
     </a>
 @endsection

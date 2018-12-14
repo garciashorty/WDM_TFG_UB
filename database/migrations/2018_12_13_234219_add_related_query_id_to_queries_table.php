@@ -14,7 +14,7 @@ class AddRelatedQueryIdToQueriesTable extends Migration
     public function up()
     {
         Schema::table('queries', function (Blueprint $table) {
-            $table->integer('relatedQuery_id')->nullable()->after('id')->unsigned();
+            $table->integer('relatedQuery_id')->after('id')->unsigned();
             $table->foreign('relatedQuery_id')->references('id')->on('queries');
         });
     }
