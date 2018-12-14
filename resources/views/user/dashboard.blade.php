@@ -5,5 +5,14 @@
 @endsection
 
 @section('content')
-    You are logged in!
+    <a class="btn btn-danger btn-lg btn-block" href="#">
+        Ver consultas
+    </a>
+    <br>
+    <a class="btn btn-success btn-lg" href="#">
+        Nueva consulta
+    </a>
+    <a class="btn btn-primary btn-lg" href="#">
+        Repetir consulta
+    </a>
 @endsection

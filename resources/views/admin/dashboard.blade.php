@@ -5,5 +5,11 @@
 @endsection
 
 @section('content')
-    You are logged in!
+    <a class="btn btn-primary btn-lg btn-block" href="{{ route('admin_users') }}">
+        Ver usuarios
+    </a>
+    <br>
+    <a class="btn btn-success btn-lg btn-block" href="{{ route('admin_doctors') }}">
+        Ver doctores
+    </a>
 @endsection

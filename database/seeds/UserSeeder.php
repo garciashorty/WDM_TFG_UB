@@ -29,5 +29,34 @@ class UserSeeder extends Seeder
             'phone' => '+34622333444',
             'password' => bcrypt('123456'),
         ]);
+
+        User::create([
+            'name' => 'doctor2',
+            'surname' => 'user',
+            'email' => 'doctor2@user.com',
+            'doctor' => true,
+            'phone' => '+34622333444',
+            'password' => bcrypt('123456'),
+        ]);
+
+        User::create([
+            'name' => 'doctor3',
+            'surname' => 'user',
+            'email' => 'doctor3@user.com',
+            'doctor' => true,
+            'phone' => '+34622333444',
+            'password' => bcrypt('123456'),
+        ]);
+
+        User::create([
+            'name' => 'doctor4',
+            'surname' => 'user',
+            'email' => 'doctor4@user.com',
+            'doctor' => true,
+            'phone' => '+34622333444',
+            'password' => bcrypt('123456'),
+        ]);
+
+        factory(User::class, 30)->create();
     }
 }
