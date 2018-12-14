@@ -19,34 +19,36 @@ Admin: Users List
             </div>
             <input id="myInput" type="text" placeholder="Filtrar..." class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
         </div>
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="users_table">
-                @foreach ($users as $user)
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
                     <tr>
-                        <th scope="row">{{ $user->id }}</th>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>
-                            <form action="{{ route('admin_delete_users', $user) }}" method="POST">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
-                                <a href="{{ route('admin_show_users', $user) }}" class="btn btn-link"><span class="oi oi-eye"></span></a>
-                                <a href="{{ route('admin_edit_users', $user)}}" class="btn btn-link"><span class="oi oi-pencil"></span></a>
-                                <button type="submit" class="btn btn-link"><span class="oi oi-trash"></span></button>
-                            </form>
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Acciones</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody id="users_table">
+                    @foreach ($users as $user)
+                        <tr>
+                            <th scope="row">{{ $user->id }}</th>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                <form action="{{ route('admin_delete_users', $user) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <a href="{{ route('admin_show_users', $user) }}" class="btn btn-link"><span class="oi oi-eye"></span></a>
+                                    <a href="{{ route('admin_edit_users', $user)}}" class="btn btn-link"><span class="oi oi-pencil"></span></a>
+                                    <button type="submit" class="btn btn-link"><span class="oi oi-trash"></span></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         {{ $users->render() }}
     @else
         <p>No hay usuarios registrados.</p>

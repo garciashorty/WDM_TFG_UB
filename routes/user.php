@@ -2,6 +2,7 @@
 
 Route::get('/', 'Dashboard@index')->name('user_dashboard');
 
+// Seccion de queries
 Route::get('/queries', 'QueryController@index')->name('user_queries');
 Route::get('/queries/{query}', 'QueryController@show')->name('user_show_queries')->where('query', '[0-9]+');
 Route::get('/queries/detail/{query}', 'QueryController@showDetail')->name('user_show_detail_queries')->where('query', '[0-9]+');

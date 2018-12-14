@@ -9,7 +9,7 @@ Doctor Dashboard
         Ver usuarios
     </a>
     <br>
-    <a class="btn btn-success btn-lg btn-block" href="#">
+    <a class="btn btn-success btn-lg btn-block" href="{{ route('doctor_queries') }}">
         Ver consultas no resueltas
     </a>
 @endsection

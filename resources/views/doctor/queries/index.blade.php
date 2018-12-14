@@ -1,18 +1,15 @@
 @extends('layouts.app_doctor')
 
 @section('title')
-    Doctor: Lista de usuarios
+    Doctor: Lista de consultas
 @endsection
 
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-2">
-        <h1 class="pb-2">{{ $title }}</h1>
-        <p>
-            <a href="{{ route('doctor_create_users') }}" class="btn btn-primary">Nuevo usuario</a>
-        </p>
+        <h2 class="pb-2">{{ $title }}</h2>
     </div>
 
-    @if ($users->isNotEmpty())
+    @if ($queries->isNotEmpty())
         <div class="input-group input-group-sm mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Filtrar</span>
@@ -24,34 +21,30 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
+                        <th scope="col">Related Query</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Created at</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="users_table">
-                    @foreach ($users as $user)
+                    @foreach ($queries as $query)
                         <tr>
-                            <th scope="row">{{ $user->id }}</th>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
+                            <th scope="row">{{ $query->id }}</th>
+                            <td>{{ $query->relatedQuery_id }}</td>
+                            <td>{{ $query->area_id }}</td>
+                            <td>{{ $query->created_at }}</td>
                             <td>
-                                <form action="{{ route('doctor_delete_users', $user) }}" method="POST">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-                                    <a href="{{ route('doctor_show_users', $user) }}" class="btn btn-link"><span class="oi oi-eye"></span></a>
-                                    <a href="{{ route('doctor_edit_users', $user)}}" class="btn btn-link"><span class="oi oi-pencil"></span></a>
-                                    <button type="submit" class="btn btn-link"><span class="oi oi-trash"></span></button>
-                                </form>
+                                <a href="{{ route('doctor_show_detail_queries', $query) }}" class="btn btn-link"><span class="oi oi-eye"></span></a>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        {{ $users->render() }}
+        {{ $queries->render() }}
     @else
-        <p>No hay usuarios registrados.</p>
+        <p>No hay consultas registradas.</p>
     @endif
 @endsection
 
