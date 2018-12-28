@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-between align-items-end mb-2">
         <h1 class="pb-2">{{ $title }}</h1>
         <p>
-            <a href="{{ route('admin_create_doctors') }}" class="btn btn-primary">Nuevo usuario</a>
+            <a href="{{ route('admin_create_doctors') }}" class="btn btn-primary">Nuevo doctor</a>
         </p>
     </div>
 

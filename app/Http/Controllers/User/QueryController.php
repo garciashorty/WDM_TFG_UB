@@ -17,7 +17,9 @@ class QueryController extends Controller
         if (! auth()->user()->doctor) {
             $title = 'Listado de consultas';
 
-            $queries = Query::whereRaw('queries.relatedQuery_id = queries.id')->paginate(15);
+            //dd(auth()->user()->id);
+
+            $queries = Query::where('user_id', auth()->user()->id)->whereRaw('queries.relatedQuery_id = queries.id')->paginate(15);
 
             return view('/user/queries/index')
                 ->with('queries', $queries)
@@ -120,6 +122,7 @@ class QueryController extends Controller
             $queries_count = Query::count()+1;
 
             Query::create([
+                'user_id' => auth()->user()->id,
                 'relatedQuery_id' => $queries_count,
                 'area_id' => $area_id,
                 'result' => $result,
@@ -135,7 +138,7 @@ class QueryController extends Controller
     public function add()
     {
         if (! auth()->user()->doctor) {
-            $area_id = request()->area;
+            $area_id = request()->area_id;
             $relatedQuery_id = request()->relatedQuery_id;
 
             $process = new Process("C:\Users\Victor\Anaconda2\pkgs\python-2.7.15-he216670_0\python V:\Documents\prueba.py argumento1");
@@ -143,6 +146,7 @@ class QueryController extends Controller
             $result = $process->getOutput();
 
             Query::create([
+                'user_id' => auth()->user()->id,
                 'relatedQuery_id' => $relatedQuery_id,
                 'area_id' => $area_id,
                 'result' => $result,

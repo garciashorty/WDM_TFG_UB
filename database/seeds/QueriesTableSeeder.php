@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Query;
+use App\User;
 
 class QueriesTableSeeder extends Seeder
 {
@@ -12,56 +13,118 @@ class QueriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $queries_count = Query::count()+1;
 
         Query::create([
-            'relatedQuery_id' => $queries_count,
-            'area_id' => 1,
+            'user_id' => 1,
+            'relatedQuery_id' => 1,
+            'area_id' => 3,
             'result' => 1,
         ]);
 
-        $queries_count = Query::count()+1;
-
         Query::create([
-            'relatedQuery_id' => $queries_count,
-            'area_id' => 5,
-            'result' => 2,
-        ]);
-
-        $queries_count = Query::count()+1;
-
-        Query::create([
-            'relatedQuery_id' => $queries_count,
-            'area_id' => 11,
-            'result' => 3,
-        ]);
-
-        factory(Query::class, 3)->create();
-
-        $queries_count = Query::count()+1;
-
-        Query::create([
-            'relatedQuery_id' => $queries_count,
-            'area_id' => 2,
-            'result' => 1,
-        ]);
-
-        $queries_count = Query::count()+1;
-
-        Query::create([
-            'relatedQuery_id' => $queries_count,
-            'area_id' => 15,
-            'result' => 2,
-        ]);
-
-        $queries_count = Query::count()+1;
-
-        Query::create([
-            'relatedQuery_id' => $queries_count,
+            'user_id' => 1,
+            'relatedQuery_id' => 2,
             'area_id' => 9,
             'result' => 2,
         ]);
 
-        factory(Query::class, 3)->create();
+        Query::create([
+            'user_id' => 1,
+            'relatedQuery_id' => 1,
+            'area_id' => 3,
+            'result' => 1,
+        ]);
+
+        Query::create([
+            'user_id' => 1,
+            'relatedQuery_id' => 1,
+            'area_id' => 3,
+            'result' => 1,
+        ]);
+
+
+        Query::create([
+            'user_id' => 7,
+            'relatedQuery_id' => 5,
+            'area_id' => 12,
+            'result' => 2,
+        ]);
+
+        Query::create([
+            'user_id' => 2,
+            'relatedQuery_id' => 6,
+            'area_id' => 18,
+            'result' => 1,
+        ]);
+
+        Query::create([
+            'user_id' => 2,
+            'relatedQuery_id' => 6,
+            'area_id' => 18,
+            'result' => 2,
+        ]);
+
+        Query::create([
+            'user_id' => 2,
+            'relatedQuery_id' => 8,
+            'area_id' => 10,
+            'result' => 1,
+        ]);
+
+        Query::create([
+            'user_id' => 15,
+            'relatedQuery_id' => 9,
+            'area_id' => 8,
+            'result' => 1,
+        ]);
+
+        Query::create([
+            'user_id' => 15,
+            'relatedQuery_id' => 9,
+            'area_id' => 10,
+            'result' => 1,
+        ]);
+
+        Query::create([
+            'user_id' => 23,
+            'relatedQuery_id' => 11,
+            'area_id' => 5,
+            'result' => 3,
+        ]);
+
+        Query::create([
+            'user_id' => 23,
+            'relatedQuery_id' => 11,
+            'area_id' => 5,
+            'result' => 3,
+        ]);
+
+        Query::create([
+            'user_id' => 23,
+            'relatedQuery_id' => 13,
+            'area_id' => 3,
+            'result' => 1,
+        ]);
+
+        Query::create([
+            'user_id' => 23,
+            'relatedQuery_id' => 14,
+            'area_id' => 14,
+            'result' => 2,
+        ]);
+
+        Query::create([
+            'user_id' => 20,
+            'relatedQuery_id' => 15,
+            'area_id' => 7,
+            'result' => 1,
+        ]);
+
+        Query::create([
+            'user_id' => 20,
+            'relatedQuery_id' => 16,
+            'area_id' => 18,
+            'result' => 1,
+        ]);
     }
 }

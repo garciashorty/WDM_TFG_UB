@@ -21,6 +21,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">ID</th>
+                        <th scope="col">User ID</th>
                         <th scope="col">Related Query</th>
                         <th scope="col">Area</th>
                         <th scope="col">Created at</th>
@@ -31,6 +32,7 @@
                     @foreach ($queries as $query)
                         <tr>
                             <th scope="row">{{ $query->id }}</th>
+                            <td>{{ $query->user_id }}</td>
                             <td>{{ $query->relatedQuery_id }}</td>
                             <td>{{ $query->area_id }}</td>
                             <td>{{ $query->created_at }}</td>

@@ -33,16 +33,11 @@
             <input type="hidden" name="relatedQuery_id" value="{{ $query->relatedQuery_id }}">
         </div>
 
-        @if ($areas != null)
-            <div class="form-group">
-                <label for="name">Area de la imagen: </label>
-                <select name="area">
-                    @foreach ($areas as $area)
-                        <option value="{{ $area->id }}">{{ $area->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        @endif
+        <div class="form-group">
+            <label for="name">Área de la imagen: </label>
+            <input type="text" class="form-control" placeholder="{{ $query->area_id }}" value="{{ $query->area_id }}" disabled>
+            <input type="hidden" name="area_id" value="{{ $query->area_id }}">
+        </div>
 
         <button type="submit" class="btn btn-primary">Crear consulta</button>
         <a href="{{ route('user_show_detail_queries', $query) }}" class="btn btn-link">Volver atrás</a>

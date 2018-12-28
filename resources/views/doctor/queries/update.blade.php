@@ -29,6 +29,11 @@
         </div>
 
         <div class="form-group">
+            <label for="name">User ID: </label>
+            <input type="text" name="user_id" class="form-control" placeholder="{{ $query->user_id }}" id="user_id" value="{{ $query->user_id }}" disabled>
+        </div>
+
+        <div class="form-group">
             <label for="name">Relacionada con la consulta ID: </label>
             <input type="text" name="relatedQuery_id" class="form-control" placeholder="{{ $query->relatedQuery_id }}" id="relatedQuery_id" value="{{ $query->relatedQuery_id }}" disabled>
         </div>

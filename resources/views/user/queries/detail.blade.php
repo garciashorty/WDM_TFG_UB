@@ -7,6 +7,7 @@
 @section('content')
     <h1>Ver consulta: {{ $query->id }}</h1>
     <hr>
+    <p>User ID: {{ $query->user_id }}</p>
     <p>Consulta relacionada: {{ $query->relatedQuery_id }}</p>
     <p>Area de la consulta: {{ $query->area_id }}</p>
     <p>Fecha de creación: {{ $query->created_at }}</p>

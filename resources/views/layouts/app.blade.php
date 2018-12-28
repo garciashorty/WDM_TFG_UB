@@ -57,7 +57,7 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <button type="button" class="btn btn-primary"><a class="btn-login" href="{{ route('login') }}">{{ __('Login') }}</a></button>
+                            <a class="btn-login" href="{{ route('login') }}"><button type="button" class="btn btn-primary">{{ __('Login') }}</button></a>
                         </li>
                         {{-- @if (Route::has('register'))
                             <li class="nav-item">
