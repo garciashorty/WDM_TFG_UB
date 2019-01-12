@@ -115,9 +115,10 @@ class QueryController extends Controller
 
             $area_id = request()->area;
 
-            $process = new Process("C:\Users\Victor\Anaconda2\pkgs\python-2.7.15-he216670_0\python V:\Documents\prueba.py argumento1");
-            $process->run();
-            $result = $process->getOutput();
+            //$process = new Process("C:\Users\Victor\Anaconda2\pkgs\python-2.7.15-he216670_0\python V:\Documents\prueba.py argumento1");
+            //$process->run();
+            //$result = $process->getOutput();
+            $result = rand(1,3);
 
             $queries_count = Query::count()+1;
 
@@ -141,9 +142,10 @@ class QueryController extends Controller
             $area_id = request()->area_id;
             $relatedQuery_id = request()->relatedQuery_id;
 
-            $process = new Process("C:\Users\Victor\Anaconda2\pkgs\python-2.7.15-he216670_0\python V:\Documents\prueba.py argumento1");
-            $process->run();
-            $result = $process->getOutput();
+            //$process = new Process("C:\Users\Victor\Anaconda2\pkgs\python-2.7.15-he216670_0\python V:\Documents\prueba.py argumento1");
+            //$process->run();
+            //$result = $process->getOutput();
+            $result = rand(1,3);
 
             Query::create([
                 'user_id' => auth()->user()->id,
