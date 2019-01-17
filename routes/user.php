@@ -11,4 +11,4 @@ Route::get('/queries/update/{query}', 'QueryController@update')->name('user_upda
 Route::post('/queries', 'QueryController@store');
 Route::post('/queries/success', 'QueryController@add')->name('user_success_queries');
 
-Route::get('queries/image/{query}', 'QueryController@image')->name('user_image_queries')->where('query', '[0-9]+');
+Route::get('/queries/image/{query}', 'QueryController@image')->name('user_image_queries')->where('query', '[0-9]+');

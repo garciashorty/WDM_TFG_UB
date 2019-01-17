@@ -9,6 +9,7 @@ use App\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Process\Process;
 use App\Area;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class QueryController extends Controller
 {
@@ -113,6 +114,22 @@ class QueryController extends Controller
             $query->update($data);
 
             return redirect()->route('doctor_queries');
+        } else {
+            return response()->view('errors/403', [], Response::HTTP_FORBIDDEN); // ERROR 403
+        }
+    }
+
+    public function image(Query $query)
+    {
+        if (auth()->user()->doctor) {
+            $headers = [];
+
+            return response()->download(
+                storage_path("app/{$query->image}"),
+                null,
+                $headers,
+                ResponseHeaderBag::DISPOSITION_INLINE
+            );
         } else {
             return response()->view('errors/403', [], Response::HTTP_FORBIDDEN); // ERROR 403
         }
