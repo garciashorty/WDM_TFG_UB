@@ -19,12 +19,12 @@
         </div>
     @endif
 
-    <form action="{{ url('user/queries') }}" method="post">
+    <form action="{{ url('user/queries') }}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
 
         <div class="form-group">
             <label for="name">Subir imagen: </label>
-            <input type="file" name="imagen" class="form-control" id="imagen" disabled>
+            <input type="file" name="imagen" class="form-control" id="imagen">
         </div>
 
         @if ($areas != null)

@@ -9,6 +9,7 @@ use App\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Process\Process;
 use App\Area;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class QueryController extends Controller
 {
@@ -31,7 +32,7 @@ class QueryController extends Controller
 
     public function show(Query $query)
     {
-        if (! auth()->user()->doctor) {
+        if (! auth()->user()->doctor && auth()->user()->id == $query->user_id) {
             $title = 'Consultas relacionadas';
 
             $queries = Query::where('relatedQuery_id', $query->id)->paginate(15);
@@ -46,7 +47,7 @@ class QueryController extends Controller
 
     public function showDetail(Query $query)
     {
-        if (! auth()->user()->doctor) {
+        if (! auth()->user()->doctor && auth()->user()->id == $query->user_id) {
             $title = 'Viendo detalle de la consulta';
 
             $back_id = $query->relatedQuery_id;
@@ -122,12 +123,14 @@ class QueryController extends Controller
 
             $queries_count = Query::count()+1;
 
+            $image = request()->imagen->store('queries/images');
+
             Query::create([
                 'user_id' => auth()->user()->id,
                 'relatedQuery_id' => $queries_count,
                 'area_id' => $area_id,
                 'result' => $result,
-                'comment' => 'Comentario de prueba',
+                'image' => $image,
             ]);
 
             return redirect()->route('user_queries');
@@ -156,6 +159,22 @@ class QueryController extends Controller
             ]);
 
             return redirect()->route('user_queries');
+        } else {
+            return response()->view('errors/403', [], Response::HTTP_FORBIDDEN); // ERROR 403
+        }
+    }
+
+    public function image(Query $query)
+    {
+        if (! auth()->user()->doctor && auth()->user()->id == $query->user_id) {
+            $headers = [];
+
+            return response()->download(
+                storage_path("app/{$query->image}"),
+                null,
+                $headers,
+                ResponseHeaderBag::DISPOSITION_INLINE
+            );
         } else {
             return response()->view('errors/403', [], Response::HTTP_FORBIDDEN); // ERROR 403
         }
