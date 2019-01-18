@@ -10,5 +10,6 @@ $factory->define(App\Query::class, function (Faker $faker) {
         'area_id' => $faker->numberBetween(1, App\Area::count()),
         'relatedQuery_id' => $faker->numberBetween(1, App\Query::count()),
         'result' => $faker->numberBetween(1,3),
+        'image' => 'queries/images/default.png'
     ];
 });

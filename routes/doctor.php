@@ -17,3 +17,5 @@ Route::get('/queries/detail/{query}', 'QueryController@showDetail')->name('docto
 Route::get('/queries/update/{query}', 'QueryController@update')->name('doctor_update_queries')->where('query', '[0-9]+');
 Route::put('/queries/{query}', 'QueryController@resolve')->where('query', '[0-9]+');
 Route::post('/queries/success', 'QueryController@add')->name('doctor_success_queries');
+
+Route::get('/queries/image/{query}', 'QueryController@image')->name('doctor_image_queries')->where('query', '[0-9]+');

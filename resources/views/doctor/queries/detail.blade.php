@@ -7,6 +7,7 @@
 @section('content')
     <h1>Ver consulta: {{ $query->id }}</h1>
     <hr>
+    <p>Image: <img src="{{ route('doctor_image_queries', $query) }}" alt="imagen" width="50%"> </p>
     <p>Usuario: {{ $query->user_id }}</p>
     <p>Consulta relacionada: {{ $query->relatedQuery_id }}</p>
     <p>Area de la consulta: {{ $query->area_id }}</p>
