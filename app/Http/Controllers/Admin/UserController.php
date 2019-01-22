@@ -105,6 +105,7 @@ class UserController extends Controller
 
     public function delete(User $user)
     {
+        Query::where('user_id', $user->id)->delete();
         $user->delete();
 
         return redirect()->route('admin_users');

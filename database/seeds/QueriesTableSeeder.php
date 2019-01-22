@@ -20,6 +20,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 3,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -28,6 +29,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 9,
             'result' => 2,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -36,6 +38,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 3,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -44,6 +47,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 3,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
 
@@ -53,6 +57,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 12,
             'result' => 2,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -61,6 +66,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 18,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -69,6 +75,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 18,
             'result' => 2,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -77,6 +84,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 10,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -85,6 +93,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 8,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -93,6 +102,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 10,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -101,6 +111,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 5,
             'result' => 3,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -109,6 +120,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 5,
             'result' => 3,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -117,6 +129,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 3,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -125,6 +138,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 14,
             'result' => 2,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -133,6 +147,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 7,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
 
         Query::create([
@@ -141,6 +156,7 @@ class QueriesTableSeeder extends Seeder
             'area_id' => 18,
             'result' => 1,
             'image' => 'queries/images/default.png',
+            'idCount' => 16,
         ]);
     }
 }

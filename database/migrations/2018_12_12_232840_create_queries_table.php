@@ -20,6 +20,7 @@ class CreateQueriesTable extends Migration
             $table->string('image')->nullable();
             $table->longText('comment')->nullable();
             $table->boolean('resolved')->default(false);
+            $table->integer('idCount')->nullable();
         });
     }
 

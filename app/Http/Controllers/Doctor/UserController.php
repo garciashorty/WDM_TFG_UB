@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Doctor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Query;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -57,7 +58,6 @@ class UserController extends Controller
     public function store()
     {
         if (auth()->user()->doctor) {
-            //dd(request()->name);
             $data = request()->validate([
                 'name' => 'required',
                 'surname' => 'required',
@@ -74,8 +74,6 @@ class UserController extends Controller
                 'password.required' => 'Debe introducir una contraseña',
                 'password.between' => 'La contraseña debe tener entre 6 y 14 carácteres'
             ]);
-
-            //dd('hola que tal');
 
             User::create([
                 'name' => request()->name,
@@ -134,6 +132,7 @@ class UserController extends Controller
     public function delete(User $user)
     {
         if (auth()->user()->doctor) {
+            Query::where('user_id', $user->id)->delete();
             $user->delete();
 
             return redirect()->route('doctor_users');
