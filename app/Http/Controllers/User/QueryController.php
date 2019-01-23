@@ -134,9 +134,9 @@ class QueryController extends Controller
             $filename = explode("/", $image);
             $filename = $filename[2];
 
-            $inverse_image = request()->imagen->move(public_path('images/queries'), $filename);
+            $inverse_image = request()->imagen->move(public_path('images/queries/images'), $filename);
 
-            $process = new Process("python scripts\image.py ".$filename);
+            $process = new Process("/usr/bin/python scripts/image_linux.py ".$filename);
             //$process = new Process("C:\Users\Victor\Anaconda2\python scripts\image.py ".$filename);
             $process->run();
             $result = $process->getOutput();
@@ -178,9 +178,9 @@ class QueryController extends Controller
             $filename = explode("/", $image);
             $filename = $filename[2];
 
-            $inverse_image = request()->imagen->move(public_path('images/queries'), $filename);
+            $inverse_image = request()->imagen->move(public_path('images/queries/images'), $filename);
 
-            $process = new Process("python scripts\image.py ".$filename);
+            $process = new Process("/usr/bin/python scripts/image_linux.py ".$filename);
             //$process = new Process("C:\Users\Victor\Anaconda2\python scripts\image.py ".$filename);
             $process->run();
             $result = $process->getOutput();
