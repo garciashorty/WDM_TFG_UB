@@ -19,12 +19,12 @@
         </div>
     @endif
 
-    <form action="{{ url('user/queries/success') }}" method="post">
+    <form action="{{ url('user/queries/success') }}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
 
         <div class="form-group">
             <label for="name">Subir imagen: </label>
-            <input type="file" name="imagen" class="form-control" id="imagen" disabled>
+            <input type="file" name="imagen" class="form-control" id="imagen">
         </div>
 
         <div class="form-group">

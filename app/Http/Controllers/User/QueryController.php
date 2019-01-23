@@ -18,6 +18,11 @@ class QueryController extends Controller
         if (! auth()->user()->doctor) {
             $title = 'Listado de consultas';
 
+            // $process = new Process("C:\Users\Victor\Anaconda2\python V:\Documents\python\image.py");
+            // $process->run();
+            // $result = $process->getOutput();
+            // dd($result);
+
             $queries = Query::where('user_id', auth()->user()->id)->whereRaw('queries.relatedQuery_id = queries.id')->paginate(15);
 
             return view('/user/queries/index')
@@ -112,18 +117,29 @@ class QueryController extends Controller
     {
         if (! auth()->user()->doctor) {
 
+            $data = request()->validate([
+                'imagen' => 'required|mimes:jpg,jpeg,png',
+            ], [
+                'imagen.required' => 'Debe introducir una imagen',
+            ]);
+
             $area_id = request()->area;
 
             $idCount = Query::first()->value('idCount')+1;
 
-            //$process = new Process("C:\Users\Victor\Anaconda2\pkgs\python-2.7.15-he216670_0\python V:\Documents\prueba.py argumento1");
-            //$process->run();
-            //$result = $process->getOutput();
-            $result = rand(1,3);
-
-            $queries_count = Query::count()+1;
+            //$queries_count = Query::count()+1;
 
             $image = request()->imagen->store('queries/images');
+
+            $filename = explode("/", $image);
+            $filename = $filename[2];
+
+            $inverse_image = request()->imagen->move(public_path('images/queries'), $filename);
+
+            $process = new Process("python scripts\image.py ".$filename);
+            //$process = new Process("C:\Users\Victor\Anaconda2\python scripts\image.py ".$filename);
+            $process->run();
+            $result = $process->getOutput();
 
             Query::create([
                 'user_id' => auth()->user()->id,
@@ -145,21 +161,40 @@ class QueryController extends Controller
     public function add()
     {
         if (! auth()->user()->doctor) {
+
+            $data = request()->validate([
+                'imagen' => 'required|mimes:jpg,jpeg,png',
+            ], [
+                'imagen.required' => 'Debe introducir una imagen',
+            ]);
+
             $area_id = request()->area_id;
             $relatedQuery_id = request()->relatedQuery_id;
 
-            //$process = new Process("C:\Users\Victor\Anaconda2\pkgs\python-2.7.15-he216670_0\python V:\Documents\prueba.py argumento1");
-            //$process->run();
-            //$result = $process->getOutput();
-            $result = rand(1,3);
+            $idCount = Query::first()->value('idCount')+1;
+
+            $image = request()->imagen->store('queries/images');
+
+            $filename = explode("/", $image);
+            $filename = $filename[2];
+
+            $inverse_image = request()->imagen->move(public_path('images/queries'), $filename);
+
+            $process = new Process("python scripts\image.py ".$filename);
+            //$process = new Process("C:\Users\Victor\Anaconda2\python scripts\image.py ".$filename);
+            $process->run();
+            $result = $process->getOutput();
 
             Query::create([
                 'user_id' => auth()->user()->id,
                 'relatedQuery_id' => $relatedQuery_id,
                 'area_id' => $area_id,
                 'result' => $result,
-                'comment' => 'Comentario de prueba',
+                'image' => $image,
+                'idCount' => 16,
             ]);
+
+            Query::where('idCount', $idCount-1)->orWhere('idCount', null)->update(['idCount' => $idCount]);
 
             return redirect()->route('user_queries');
         } else {
