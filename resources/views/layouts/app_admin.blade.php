@@ -36,21 +36,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ route('main_page') }}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle user-dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            User
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('user_dashboard') }}">Dashboard</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Nueva consulta</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('user_dashboard') }}">User <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ route('doctor_dashboard') }}">Doctor <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mt-md-0">
@@ -123,7 +113,7 @@
 
     <footer class="footer">
         <div class="container">
-            <span class="text-muted">Place sticky footer content here.
+            <span class="text-muted">Hospital Italiano de Buenos Aires (2019)
                 <a href="{{ route('admin_dashboard') }}">Admin <span class="sr-only">(current)</span></a>
             </span>
         </div>

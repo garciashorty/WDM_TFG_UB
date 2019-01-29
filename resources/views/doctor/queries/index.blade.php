@@ -45,6 +45,7 @@
             </table>
         </div>
         {{ $queries->render() }}
+        <a href="{{ route('doctor_dashboard') }}">Volver al listado</a>
     @else
         <p>No hay consultas registradas.</p>
     @endif

@@ -50,6 +50,7 @@
             </table>
         </div>
         {{ $doctors->render() }}
+        <a href="{{ route('admin_dashboard') }}">Volver al listado</a>
     @else
         <p>No hay doctores registrados.</p>
     @endif
