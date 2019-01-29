@@ -57,13 +57,13 @@ class QueryController extends Controller
 
             switch ($query->result) {
                 case 1:
-                    $result = 'Sin problemas';
+                    $result = 'Sin riesgo';
                     break;
                 case 2:
-                    $result = 'Podrían haber problemas';
+                    $result = 'Riesgo de melanoma';
                     break;
                 case 3:
-                    $result = 'Se han detectado problemas';
+                    $result = 'Riesgo de melanoma elevado';
                     break;
                 default:
                     # code...

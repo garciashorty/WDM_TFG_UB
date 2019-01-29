@@ -50,6 +50,7 @@
             </table>
         </div>
         {{ $queries->render() }}
+        <a href="{{ route('user_queries') }}">Volver al listado</a>
     @else
         <p>No hay consultas registradas.</p>
     @endif

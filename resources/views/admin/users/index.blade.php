@@ -50,6 +50,7 @@ Admin: Users List
             </table>
         </div>
         {{ $users->render() }}
+        <a href="{{ route('admin_dashboard') }}">Volver al listado</a>
     @else
         <p>No hay usuarios registrados.</p>
     @endif

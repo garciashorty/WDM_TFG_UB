@@ -48,7 +48,7 @@ class DoctorsModuleTest extends TestCase
         $this->actingAsAdmin()
             ->get('/admin/doctors/'.$doctor->id)
         	->assertStatus(200)
-        	->assertSee('Doctor');
+        	->assertSee('doctor');
     }
 
     /**

@@ -7,9 +7,9 @@
 @section('content')
 <div class="jumbotron">
     <h1>Hospital Italiano de Buenos Aires</h1>
-    <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll,
-        this navbar remains in its original position and moves with the rest of the page.</p>
-    <a class="btn btn-lg btn-primary" href="#" role="button">View navbar docs &raquo;</a>
+    <p class="lead">Bienvenido al proyecto de estudio dermatológico del Hospital Italiano de Buenos Aires. En la siguiente plataforma usted
+        podrá tener el control sobre la evolución de las imperfecciones de su piel, con el objetivo de prevenir y anticiparse a posibles melanomas.
+    </p>
 </div>
 <div class="card-deck mb-3 text-center">
     <div class="card mb-4 shadow-sm">
@@ -17,14 +17,11 @@
             <h4 class="my-0 font-weight-normal">¿Dónde estamos?</h4>
         </div>
         <div class="card-body">
-            <h1 class="card-title pricing-card-title">$0 </h1>
+            <h3 class="card-title pricing-card-title">Nos puedes encontrar en</h3>
             <ul class="list-unstyled mt-3 mb-4">
-                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras suscipit turpis eu neque aliquam
-                    rhoncus. Proin consequat augue vitae quam consectetur cursus. Suspendisse non ante ornare,
-                    malesuada lorem ac, rhoncus lectus. Proin ac nisl in ex finibus commodo. Praesent suscipit ac eros
-                    et aliquam.</div>
+                <div>Pres. Tte. Gral. Juan Domingo Perón 4190, C1199 ABH, Buenos Aires, Argentina</div>
             </ul>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+            <a href="https://goo.gl/maps/ZVQoX7LPvk22"><button type="button" class="btn btn-lg btn-block btn-primary">Ver en Google Maps</button></a>
         </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -32,14 +29,11 @@
             <h4 class="my-0 font-weight-normal">¿Qué hacemos?</h4>
         </div>
         <div class="card-body">
-            <h1 class="card-title pricing-card-title">$15 </h1>
+            <h3 class="card-title pricing-card-title">Nuestro objetivo</h3>
             <ul class="list-unstyled mt-3 mb-4">
-                <div>Sed finibus dignissim ex ut mollis. Nulla facilisi. Aliquam efficitur odio a vestibulum suscipit.
-                    Proin orci tellus, varius a eleifend sollicitudin, luctus non sem. Nam luctus ligula non dui
-                    lobortis, at sagittis turpis vulputate. Duis eu ipsum volutpat, efficitur lectus quis, faucibus
-                    purus. Fusce vitae imperdiet arcu.</div>
+                <div>Este proyecto tiene como objetivo poder prevenir o detectar cualquier tipo de melanoma para actuar lo antes posible.</div>
             </ul>
-            <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+            <a href="{{ route('user_dashboard') }}"><button type="button" class="btn btn-lg btn-block btn-primary">Ir al panel de usuario</button></a>
         </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -47,12 +41,11 @@
             <h4 class="my-0 font-weight-normal">App móvil</h4>
         </div>
         <div class="card-body">
-            <h1 class="card-title pricing-card-title">$29 </h1>
+            <h3 class="card-title pricing-card-title">Accede desde donde quieras</h3>
             <ul class="list-unstyled mt-3 mb-4">
-                <div>Ut at ligula ut erat elementum blandit. Morbi egestas justo nec ante suscipit, et facilisis nulla
-                    venenatis. Morbi tincidunt nulla nec nibh euismod eleifend.</div>
+                <div>Gracias a nuestra app móvil es posible acceder a la plataforma directamente desde el dispositivo que desees.</div>
             </ul>
-            <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
+            <button type="button" class="btn btn-lg btn-block btn-primary" disabled>Descargar app</button>
         </div>
     </div>
 </div>
