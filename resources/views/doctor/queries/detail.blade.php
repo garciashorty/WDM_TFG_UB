@@ -8,7 +8,7 @@
     <h1>Ver detalle de consulta: {{ $query->id }}</h1>
     <hr>
     <div class="row">
-            <div class="col"><h4>Image:</h4> <br> <img src="{{ route('user_image_queries', $query) }}" class="img-thumbnail" alt="imagen" width="50%"></div>
+            <div class="col"><h4>Image:</h4> <br> <img src="{{ route('doctor_image_queries', $query) }}" class="img-thumbnail" alt="imagen" width="50%"></div>
             <div class="col"><h4>Image Mod:</h4> <br> <img src="/images/{{$query->image}}" class="img-thumbnail" alt="imagen" width="50%"></div>
     </div>
     <br>
