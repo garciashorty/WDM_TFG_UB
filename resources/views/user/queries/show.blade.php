@@ -39,8 +39,20 @@
                             <td>{{ $query->relatedQuery_id }}</td>
                             <td>{{ $query->area_id }}</td>
                             <td>{{ $query->created_at }}</td>
-                            <td>{{ $query->result }}</td>
-                            <td>{{ $query->resolved }}</td>
+                            @if ($query->result == 1 )
+                                <td style="color: #009921;">Sin riesgo</td>
+                            @elseif ($query->result == 2)
+                                <td style="color: #ffbb00;">Riesgo de melanoma</td>
+                            @else
+                                <td style="color: #c60600;">Riesgo de melanoma elevado</td>
+                            @endif
+                            <td>
+                                @if ($query->resolved == 0)
+                                    No
+                                @else
+                                    Sí
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('user_show_detail_queries', $query) }}" class="btn btn-link"><span class="oi oi-eye"></span></a>
                             </td>

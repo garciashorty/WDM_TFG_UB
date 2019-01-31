@@ -18,11 +18,6 @@ class QueryController extends Controller
         if (! auth()->user()->doctor) {
             $title = 'Listado de consultas';
 
-            // $process = new Process("C:\Users\Victor\Anaconda2\python V:\Documents\python\image.py");
-            // $process->run();
-            // $result = $process->getOutput();
-            // dd($result);
-
             $queries = Query::where('user_id', auth()->user()->id)->whereRaw('queries.relatedQuery_id = queries.id')->paginate(15);
 
             return view('/user/queries/index')
@@ -40,8 +35,15 @@ class QueryController extends Controller
 
             $queries = Query::where('relatedQuery_id', $query->id)->paginate(15);
 
+            if ($query->resolved == 0) {
+                $resolved = 'Pendiente';
+            } else {
+                $resolved = 'Resuelto';
+            }
+
             return view('/user/queries/show')
                 ->with('queries', $queries)
+                ->with('resolved', $resolved)
                 ->with('title', $title);
         } else {
             return response()->view('errors/403', [], Response::HTTP_FORBIDDEN); // ERROR 403
